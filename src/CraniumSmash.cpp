@@ -20,7 +20,7 @@ std::string CraniumSmash::interpret(std::string code, std::string input)
 				tapePos == 0 ? tapePos == 1023 : tapePos--;
 				break;
 			case '>':
-				tapePos == 1023 ? tapePos = 0 : tapePos++;
+				tapePos == tapePos++ % 1023;
 				break;
 			case '[':
 				if (_tape[tapePos] == 0)
