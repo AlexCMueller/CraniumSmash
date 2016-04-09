@@ -1,5 +1,18 @@
 #include "CraniumSmash.h"
 
+int parseInt(std::string::iterator& it)
+{
+	std::string buffer;
+	it++;
+	while (isdigit(*it))
+	{
+		buffer += *it;
+		it++;
+	}
+	it--;
+	return stoi(buffer);
+}
+
 std::string CraniumSmash::interpret(std::string code, std::string input)
 {
 	std::string output;
@@ -17,7 +30,7 @@ std::string CraniumSmash::interpret(std::string code, std::string input)
 				_tape[tapePos]--;
 				break;
 			case '<':
-				tapePos == 0 ? tapePos == 1023 : tapePos--;
+				tapePos = tapePos % 1024;
 				break;
 			case '>':
 				tapePos == 1023 ? tapePos = 0 : tapePos++;
@@ -64,7 +77,11 @@ std::string CraniumSmash::interpret(std::string code, std::string input)
 			case '.':
 				output += static_cast<char>(_tape[tapePos]);
 				break;
-			default:
+			case '$':
+				_tape[tapePos] = parseInt(it) % 256; 
+				break;
+			case '@':
+				tapePos = parseInt(it) % 1024; 
 				break;
 		}
 	}
