@@ -3,12 +3,13 @@
 #include <cstdint>
 #include <string>
 #include <stack>
+#include "config.h"
 
 class CraniumSmash
 {
 public:
 	std::string interpret(std::string code, std::string input);
 private:
-	uint8_t _tape[1024] = {0};
+	uint8_t _tape[TAPE_SIZE] = {0};
 };
 #endif // CRANIUMSMASH_H

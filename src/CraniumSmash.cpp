@@ -30,11 +30,11 @@ std::string CraniumSmash::interpret(std::string code, std::string input)
 				_tape[tapePos]--;
 				break;
 			case '<':
-				tapePos == 0 ? tapePos = 1023 : tapePos--;
+				tapePos == 0 ? tapePos = (TAPE_SIZE - 1) : tapePos--;
 				break;
 			case '>':
 				tapePos++;
-				tapePos = tapePos % 1024;
+				tapePos = tapePos % TAPE_SIZE;
 				break;
 			case '[':
 				if (_tape[tapePos] == 0)
@@ -82,8 +82,12 @@ std::string CraniumSmash::interpret(std::string code, std::string input)
 				_tape[tapePos] = parseInt(it) % 256; 
 				break;
 			case '@':
-				tapePos = parseInt(it) % 1024; 
+				tapePos = parseInt(it) % TAPE_SIZE; 
 				break;
+			case '?':
+				output += std::to_string(tapePos);
+			case '`':
+				output += '\n';
 		}
 	}
 	return output; 
