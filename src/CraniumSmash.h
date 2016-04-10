@@ -3,6 +3,7 @@
 #include <cstdint>
 #include <string>
 #include <stack>
+#include <unordered_map>
 #include "config.h"
 
 class CraniumSmash

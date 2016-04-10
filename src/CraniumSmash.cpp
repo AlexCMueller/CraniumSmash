@@ -13,12 +13,15 @@ int parseInt(std::string::iterator& it)
 	return stoi(buffer);
 }
 
-std::string CraniumSmash::interpret(std::string code, std::string input)
+std::string CraniumSmash::interpret(std::string code, std::string input = "")
 {
 	std::string output;
 	unsigned int tapePos = 0;
 	std::stack<std::string::iterator> loopStack;
+	std::stack<std::string::iterator> procCallStack;
+	std::unordered_map<int, std::string::iterator> procMap;
 	int temp;
+	int level;
 
 	for (std::string::iterator it = code.begin(); it != code.end(); it++)
 	{
@@ -40,7 +43,7 @@ std::string CraniumSmash::interpret(std::string code, std::string input)
 			case '[':
 				if (_tape[tapePos] == 0)
 				{
-					int level = 1;
+					level = 1;
 					while (level != 0)
 					{
 						it++;
@@ -104,6 +107,35 @@ std::string CraniumSmash::interpret(std::string code, std::string input)
 				}
 				tapePos = temp;
 				break;
+			case '#':
+				procMap.insert(std::make_pair(parseInt(it), it + 1));
+				it += 2;
+				level = 1;
+				while (level != 0)
+				{
+					if (*it == '(')
+					{
+						level++;
+					}
+					if (*it == ')')
+					{
+						level--;
+					}
+					it++;
+				}
+				it--;
+				break;
+			case '&':
+				temp = parseInt(it);
+				procCallStack.push(it);
+				it = procMap.at(temp);
+				break;
+			case ')':
+				if (!procCallStack.empty())
+				{
+					it = procCallStack.top();
+					procCallStack.pop();
+				}
 			default:
 				break;
 		}
