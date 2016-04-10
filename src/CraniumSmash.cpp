@@ -100,7 +100,7 @@ std::string CraniumSmash::interpret(std::string code, std::string input)
 				while(_tape[tapePos] != 0)
 				{
 					output += static_cast<char>(_tape[tapePos]);
-					tapePos++;
+					tapePos == TAPE_SIZE - 1 ? tapePos = 0 : tapePos++;
 				}
 				tapePos = temp;
 				break;
