@@ -4,5 +4,5 @@
 int main()
 {
 	CraniumSmash interpreter;
-	std::cout << interpreter.interpret(",[.,]`@10?", "Hello, world") << std::endl;
+	std::cout << interpreter.interpret("$58>$32>>,[>,];3`@3[?;0.;1:`>]", "This string will be analyzed!") << std::endl;
 }

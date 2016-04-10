@@ -18,6 +18,7 @@ std::string CraniumSmash::interpret(std::string code, std::string input)
 	std::string output;
 	unsigned int tapePos = 0;
 	std::stack<std::string::iterator> loopStack;
+	int temp;
 
 	for (std::string::iterator it = code.begin(); it != code.end(); it++)
 	{
@@ -86,8 +87,25 @@ std::string CraniumSmash::interpret(std::string code, std::string input)
 				break;
 			case '?':
 				output += std::to_string(tapePos);
+				break;
 			case '`':
 				output += '\n';
+				break;
+			case ':':
+				output += std::to_string(_tape[tapePos]);
+				break;
+			case ';':
+				temp = tapePos;
+				tapePos = parseInt(it);
+				while(_tape[tapePos] != 0)
+				{
+					output += static_cast<char>(_tape[tapePos]);
+					tapePos++;
+				}
+				tapePos = temp;
+				break;
+			default:
+				break;
 		}
 	}
 	return output; 
