@@ -108,22 +108,26 @@ std::string CraniumSmash::interpret(std::string code, std::string input = "")
 				tapePos = temp;
 				break;
 			case '#':
-				procMap.insert(std::make_pair(parseInt(it), it + 1));
-				it += 2;
-				level = 1;
-				while (level != 0)
+				temp = parseInt(it);
+				if (*(it + 1) == '(')
 				{
-					if (*it == '(')
+					procMap.insert(std::make_pair(temp, it + 1));
+					it += 2;
+					level = 1;
+					while (level != 0)
 					{
-						level++;
+						if (*it == '(')
+						{
+							level++;
+						}
+						if (*it == ')')
+						{
+							level--;
+						}
+						it++;
 					}
-					if (*it == ')')
-					{
-						level--;
-					}
-					it++;
+					it--;
 				}
-				it--;
 				break;
 			case '&':
 				temp = parseInt(it);

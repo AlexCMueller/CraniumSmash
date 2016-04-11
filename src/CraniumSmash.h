@@ -13,4 +13,5 @@ public:
 private:
 	uint8_t _tape[TAPE_SIZE] = {0};
 };
+
 #endif // CRANIUMSMASH_H

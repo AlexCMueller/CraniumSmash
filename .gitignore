@@ -1,2 +1,4 @@
 .ycm_extra_conf.*
 src/makefile
+bin/input.txt
+bin/program.txt
