@@ -28,5 +28,5 @@ int main()
 		codeString = readFile(codeFile);
 		codeFile.close();
 	}
-	std::cout << interpreter.interpret(codeString, inputString) << std::endl;
+	interpreter.interpret(codeString, inputString);
 }

@@ -13,9 +13,8 @@ int parseInt(std::string::iterator& it)
 	return stoi(buffer);
 }
 
-std::string CraniumSmash::interpret(std::string code, std::string input = "")
+void CraniumSmash::interpret(std::string code, std::string input, std::ostream& outputStream)
 {
-	std::string output;
 	unsigned int tapePos = 0;
 	std::stack<std::string::iterator> loopStack;
 	std::stack<std::string::iterator> procCallStack;
@@ -80,7 +79,7 @@ std::string CraniumSmash::interpret(std::string code, std::string input = "")
 				}
 				break;
 			case '.':
-				output += static_cast<char>(_tape[tapePos]);
+				outputStream << static_cast<char>(_tape[tapePos]);
 				break;
 			case '$':
 				_tape[tapePos] = parseInt(it) % 256; 
@@ -89,20 +88,20 @@ std::string CraniumSmash::interpret(std::string code, std::string input = "")
 				tapePos = parseInt(it) % TAPE_SIZE; 
 				break;
 			case '?':
-				output += std::to_string(tapePos);
+				outputStream << std::to_string(tapePos);
 				break;
 			case '`':
-				output += '\n';
+				outputStream << '\n';
 				break;
 			case ':':
-				output += std::to_string(_tape[tapePos]);
+				outputStream << std::to_string(_tape[tapePos]);
 				break;
 			case ';':
 				temp = tapePos;
 				tapePos = parseInt(it);
 				while(_tape[tapePos] != 0)
 				{
-					output += static_cast<char>(_tape[tapePos]);
+					outputStream << static_cast<char>(_tape[tapePos]);
 					tapePos == TAPE_SIZE - 1 ? tapePos = 0 : tapePos++;
 				}
 				tapePos = temp;
@@ -144,5 +143,4 @@ std::string CraniumSmash::interpret(std::string code, std::string input = "")
 				break;
 		}
 	}
-	return output; 
 }
